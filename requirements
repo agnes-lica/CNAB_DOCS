@@ -1,0 +1,4 @@
+autopep8==2.0.0
+pycodestyle==2.9.1
+pyparsing==3.0.9
+tomli==2.0.1

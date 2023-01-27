@@ -1,5 +1,5 @@
 """
-WSGI config for CNAB_DOCKS project.
+WSGI config for CNAB_DOCS project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CNAB_DOCKS.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CNAB_DOCS.settings')
 
 application = get_wsgi_application()

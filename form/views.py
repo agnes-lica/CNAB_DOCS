@@ -1,17 +1,14 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .form import UploadFileForm
+from .utils import utils
 
-def handle_uploaded_file(f):
-    with open('aa.txt', 'wb+') as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
 
 def upload_file(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            handle_uploaded_file(request.FILES['file'])
+            utils.handle_uploaded_file(request.FILES['file'])
+            return redirect('show_transactions')
     else:
         form = UploadFileForm()
         
