@@ -1,5 +1,9 @@
 from transaction.serializer import TransactionSerializer
 from datetime import datetime
+from store.models import Store
+from store.serializer import StoreSerializer
+from transaction.models import Transaction
+from transaction.serializer import TransactionSerializer
 
 def save_in_database(obj):
     serializer = TransactionSerializer(data=obj)
@@ -11,15 +15,15 @@ def handle_file(headline):
     headline_decoded=headline.decode()
     
     transaction_description = {
-        "1": {"Débito" : "entry"},
-        "2": {"Boleto" : "output"},
-        "3": {"Financiamento" : "output"},
-        "4": {"Crédito" : "entry"},
-        "5": {"Recebimento Empréstimo" : "entry"},
-        "6": {"Vendas" : "entry"},
-        "7": {"Recebimento TED" : "entry"},
-        "8": {"Recebimento DOC" : "entry"},
-        "9": {"Aluguel" : "output"}
+        "1": {"Débito" : "Entrada"},
+        "2": {"Boleto" : "Saída"},
+        "3": {"Financiamento" : "Saída"},
+        "4": {"Crédito" : "Entrada"},
+        "5": {"Recebimento Empréstimo" : "Entrada"},
+        "6": {"Vendas" : "Entrada"},
+        "7": {"Recebimento TED" : "Entrada"},
+        "8": {"Recebimento DOC" : "Entrada"},
+        "9": {"Aluguel" : "Saída"}
     }
     
     type_of_transaction = [headline_decoded[0:1], list(transaction_description.get(headline_decoded[0:1]).keys())[0], list(transaction_description.get(headline_decoded[0:1]).values())[0]]
@@ -53,3 +57,22 @@ def handle_uploaded_file(file):
         handle_file(headline)
         
         
+        
+def db_stores():
+    stores = Store.objects.all()
+
+    serializer = StoreSerializer(stores, many=True)
+
+    transactions_in_stores(serializer.data)
+
+    return serializer.data
+      
+    return serializer_store.data 
+
+def transactions_in_stores(store_list):
+    for store in store_list:
+        
+        # ipdb.set_trace()
+        transactions = Transaction.objects.filter(store_id = store['id'])
+        serializer = TransactionSerializer(transactions, many = True)
+        store['transactions'] = serializer.data

@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    <title>CNAB DOCS</title>
+  </head>
+  <body>
+    <header>
+      <h1>Todas as transações</h1>
+    </header>
+
+    <br />
+    <ul>
+      {% for store in stores %}
+
+      <li>
+        <h2>Noma da loja: {{ store.name}}</h2>
+        <p>Proprietário: {{store.owner}}</p>
+        <table>
+          <tr>
+            <th>Valor</th>
+            <th>Tipo</th>
+            <th>Descrição</th>
+            <th>Cartão</th>
+            <th>CPF</th>
+            <th>Data</th>
+            <th>Hora</th>
+          </tr>
+          {% for transaction in store.transactions %}
+          <tr>
+            <td>R$ {{transaction.value|floatformat:2}}</td>
+            <td>{{transaction.transaction_nature}}</td>
+            <td>{{transaction.transaction_description}}</td>
+            <td>{{transaction.card}}</td>
+            <td>{{transaction.cpf}}</td>
+            <td>{{transaction.date}}</td>
+            <td>{{transaction.hour}}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </li>
+
+      {% endfor %}
+    </ul>
+  </body>
+</html>
